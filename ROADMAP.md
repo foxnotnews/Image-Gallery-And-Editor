@@ -1,4 +1,4 @@
-Image Gallery And Editor
+#Image Gallery And Editor
 
 Create an interface that permit users to upload various images, edit them and anaylse the data of the pictures
 
