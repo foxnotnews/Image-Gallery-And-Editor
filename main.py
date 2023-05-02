@@ -5,6 +5,7 @@ import sys
 from PyQt5.QtWidgets import QApplication,QFileDialog,QMainWindow
 from PyQt5.QtGui import QPixmap
 from GUI_design import*
+from screeninfo import get_monitors
 
 
 FILES=[]
@@ -24,7 +25,7 @@ class Application(QMainWindow, Ui_MainWindow):
         self.load_image_button.clicked.connect(self.select_files)
         self.current_image=0
         self.previous_image_button.clicked.connect(self.previous_image)
-        self.next_image_button.clicked.connect(self.next_image)            
+        self.next_image_button.clicked.connect(self.next_image)          
 
     #select 1/ multiple iamge to put in the list FILES
     def select_files(self):
@@ -38,9 +39,9 @@ class Application(QMainWindow, Ui_MainWindow):
             self.current_display_image()          
     #display the image on GUI
     def current_display_image(self):
-       
+        resolution = self.__get_screen_resolution()
         if len(FILES)!=0 or self.current_image< len(FILES):
-            self.pixmap = QPixmap(FILES[self.current_image])
+            self.pixmap = QPixmap(FILES[self.current_image]).scaled(int(resolution[0]*0.8), int(resolution[1]*0.8))
             self.display_image.setPixmap(self.pixmap)
     #go to next image on the list FILES
     def next_image(self):
@@ -56,7 +57,19 @@ class Application(QMainWindow, Ui_MainWindow):
         else:
             self.current_image -=1
             self.current_display_image()
-    
+    def __get_screen_resolution(self): 
+        #returns the resolution of the main monitor
+        #
+        #Input: -
+        #
+        #Output: a list containing the width and height of the primary system monitor.
+        for monitor in get_monitors():
+            if(monitor.is_primary):
+                width = monitor.width
+                height = monitor.height
+        assert width > 0, f"screen width > 0 expected, got: {width}"
+        assert height > 0, f"screen width > 0 expected, got: {height}"
+        return([width, height])
 
         
 
