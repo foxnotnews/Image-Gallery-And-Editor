@@ -1,5 +1,4 @@
 from PyQt5.QtWidgets import QApplication,QFileDialog,QMainWindow
-
 import subprocess
 import xml.etree.ElementTree as xml
 import sys

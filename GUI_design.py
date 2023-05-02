@@ -9,25 +9,30 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from screeninfo import get_monitors
 
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
+        for monitor in get_monitors():
+            if(monitor.is_primary):
+                width = monitor.width
+                height = monitor.height
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(857, 659)
+        MainWindow.resize(width, height)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.previous_image_button = QtWidgets.QPushButton(self.centralwidget)
-        self.previous_image_button.setGeometry(QtCore.QRect(90, 490, 151, 51))
+        self.previous_image_button.setGeometry(QtCore.QRect(90, int(height*0.8), 151, 51))
         self.previous_image_button.setObjectName("previous_image_button")
         self.next_image_button = QtWidgets.QPushButton(self.centralwidget)
-        self.next_image_button.setGeometry(QtCore.QRect(240, 490, 151, 51))
+        self.next_image_button.setGeometry(QtCore.QRect(240, int(height*0.8), 151, 51))
         self.next_image_button.setObjectName("next_image_button")
         self.load_image_button = QtWidgets.QPushButton(self.centralwidget)
-        self.load_image_button.setGeometry(QtCore.QRect(170, 550, 141, 41))
+        self.load_image_button.setGeometry(QtCore.QRect(170, int(height*0.8+51), 141, 41))
         self.load_image_button.setObjectName("load_image_button")
         self.display_image = QtWidgets.QLabel(self.centralwidget)
-        self.display_image.setGeometry(QtCore.QRect(30, 40, 381, 431))
+        self.display_image.setGeometry(QtCore.QRect(30, 40, int(width*0.8-51), int(height*0.8-51)))
         self.display_image.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.display_image.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.display_image.setLineWidth(20)
