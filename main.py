@@ -102,10 +102,6 @@ class Application(QMainWindow, Ui_MainWindow):
         assert width > 0, f"screen width > 0 expected, got: {width}"
         assert height > 0, f"screen width > 0 expected, got: {height}"
         return([width, height])
-    
-    
-      
-      
 
         
 

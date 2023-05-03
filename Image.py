@@ -89,6 +89,8 @@ class Image():
                 fx0 = signal[x0-1]
                 fx1 = signal[x1-1]
                 y_new[i] = fx0 *(1- (x_new[i] - x0) / (x1 - x0)) + fx1 * (x_new[i] - x0) / (x1 - x0)
+        assert np.all(y_new) >= 0 & np.all(y_new) <= 255
+        assert isinstance(y_new, np.ndarray), f"in Image.__interp_1D y_new should be a numpy array. got: {type(y_new)}"
         return y_new
     def __get_cpu_cores():
         return(os.cpu_count())
@@ -108,7 +110,8 @@ class Image():
         
         scale_factor = target_resolution/self.resolution
         
-        assert isinstance(scale_factor, float), f"in Image.get_scaling_factor scale_factor shouldbe a float. got: {type(scale_factor)}"
+        assert isinstance(scale_factor, float), f"in Image.get_scaling_factor scale_factor should be a float. got: {type(scale_factor)}"
+        assert scale_factor != 0, f"in Image.get_scaling_factor scale_factor shouldn't be 0"
 
         return scale_factor
     #def interpol():
