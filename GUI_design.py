@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'gallery.ui'
+# Form implementation generated from reading ui file 'GUI_design.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.9
 #
@@ -9,30 +9,22 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from screeninfo import get_monitors
 
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
-        for monitor in get_monitors():
-            if(monitor.is_primary):
-                width = monitor.width
-                height = monitor.height
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(width, height)
+        MainWindow.resize(857, 659)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.previous_image_button = QtWidgets.QPushButton(self.centralwidget)
-        self.previous_image_button.setGeometry(QtCore.QRect(90, int(height*0.8), 151, 51))
+        self.previous_image_button.setGeometry(QtCore.QRect(90, 490, 151, 51))
         self.previous_image_button.setObjectName("previous_image_button")
         self.next_image_button = QtWidgets.QPushButton(self.centralwidget)
-        self.next_image_button.setGeometry(QtCore.QRect(240, int(height*0.8), 151, 51))
+        self.next_image_button.setGeometry(QtCore.QRect(240, 490, 151, 51))
         self.next_image_button.setObjectName("next_image_button")
-        self.load_image_button = QtWidgets.QPushButton(self.centralwidget)
-        self.load_image_button.setGeometry(QtCore.QRect(170, int(height*0.8+51), 141, 41))
-        self.load_image_button.setObjectName("load_image_button")
         self.display_image = QtWidgets.QLabel(self.centralwidget)
-        self.display_image.setGeometry(QtCore.QRect(30, 40, int(width*0.8-51), int(height*0.8-51)))
+        self.display_image.setGeometry(QtCore.QRect(30, 40, 400, 400))
         self.display_image.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.display_image.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.display_image.setLineWidth(20)
@@ -42,21 +34,54 @@ class Ui_MainWindow(object):
         self.display_image.setAlignment(QtCore.Qt.AlignBottom|QtCore.Qt.AlignHCenter)
         self.display_image.setWordWrap(False)
         self.display_image.setObjectName("display_image")
+        self.Save = QtWidgets.QPushButton(self.centralwidget)
+        self.Save.setGeometry(QtCore.QRect(170, 550, 131, 41))
+        self.Save.setObjectName("Save")
+        self.Select_button = QtWidgets.QPushButton(self.centralwidget)
+        self.Select_button.setGeometry(QtCore.QRect(420, 440, 131, 41))
+        self.Select_button.setObjectName("Select_button")
+        self.scale = QtWidgets.QSlider(self.centralwidget)
+        self.scale.setGeometry(QtCore.QRect(660, 190, 22, 160))
+        self.scale.setOrientation(QtCore.Qt.Vertical)
+        self.scale.setObjectName("scale")
+        self.Brightness = QtWidgets.QSlider(self.centralwidget)
+        self.Brightness.setGeometry(QtCore.QRect(790, 190, 22, 160))
+        self.Brightness.setOrientation(QtCore.Qt.Vertical)
+        self.Brightness.setObjectName("Brightness")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 857, 26))
         self.menubar.setObjectName("menubar")
         self.menuside = QtWidgets.QMenu(self.menubar)
         self.menuside.setObjectName("menuside")
+        self.menuFilters = QtWidgets.QMenu(self.menubar)
+        self.menuFilters.setObjectName("menuFilters")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
+        self.actionLoad_FIles = QtWidgets.QAction(MainWindow)
+        self.actionLoad_FIles.setObjectName("actionLoad_FIles")
+        self.actionLoad_Folder = QtWidgets.QAction(MainWindow)
+        self.actionLoad_Folder.setObjectName("actionLoad_Folder")
+        self.actionSave = QtWidgets.QAction(MainWindow)
+        self.actionSave.setObjectName("actionSave")
+        self.actionSave_as = QtWidgets.QAction(MainWindow)
+        self.actionSave_as.setObjectName("actionSave_as")
+        self.actionEdge_map = QtWidgets.QAction(MainWindow)
+        self.actionEdge_map.setObjectName("actionEdge_map")
+        self.actionBilinear_Upscaling = QtWidgets.QAction(MainWindow)
+        self.actionBilinear_Upscaling.setObjectName("actionBilinear_Upscaling")
         self.menuside.addSeparator()
+        self.menuside.addAction(self.actionLoad_FIles)
         self.menuside.addSeparator()
-        self.menuside.addSeparator()
-        self.menuside.addSeparator()
+        self.menuside.addAction(self.actionLoad_Folder)
+        self.menuside.addAction(self.actionSave)
+        self.menuside.addAction(self.actionSave_as)
+        self.menuFilters.addAction(self.actionEdge_map)
+        self.menuFilters.addAction(self.actionBilinear_Upscaling)
         self.menubar.addAction(self.menuside.menuAction())
+        self.menubar.addAction(self.menuFilters.menuAction())
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -66,8 +91,16 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.previous_image_button.setText(_translate("MainWindow", "<"))
         self.next_image_button.setText(_translate("MainWindow", ">"))
-        self.load_image_button.setText(_translate("MainWindow", "Load images"))
-        self.menuside.setTitle(_translate("MainWindow", "side"))
+        self.Save.setText(_translate("MainWindow", "Save"))
+        self.Select_button.setText(_translate("MainWindow", "Select image"))
+        self.menuside.setTitle(_translate("MainWindow", "File"))
+        self.menuFilters.setTitle(_translate("MainWindow", "Filters"))
+        self.actionLoad_FIles.setText(_translate("MainWindow", "Load Files"))
+        self.actionLoad_Folder.setText(_translate("MainWindow", "Load Folder"))
+        self.actionSave.setText(_translate("MainWindow", "Save"))
+        self.actionSave_as.setText(_translate("MainWindow", "Save as"))
+        self.actionEdge_map.setText(_translate("MainWindow", "Edge map"))
+        self.actionBilinear_Upscaling.setText(_translate("MainWindow", "Bilinear Upscaling"))
 
 
 if __name__ == "__main__":

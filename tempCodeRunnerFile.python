@@ -1,0 +1,22 @@
+FILES=[]
+image_type=(".png" ,".jpg", ".jpeg", ".bmp")
+
+def Load_folder(f) :
+        self.directory = str(QtWidgets.QFileDialog.getExistingDirectory())
+        self.files=os.listdir(f"{self.directory}")
+        print(self.files)
+        for file in self.files:
+            if file.endswith(image_type):
+                FILES.append(file)
+
+
+        print(FILES)
+
+f=['.vscode', 'bird.jpg', 'cat.jpg', 'chessboard.jpeg', 'ex1_ex2.ipynb', 'ex3.ipynb', 'finding_edges_bird.png', 'finding_edges_cat.png', 'harris1.png', 'harris2.png', 'hw2.pdf', 'hw2_ex1_Carla_Andrade.py', 'hw2_ex2_Carla_Andrade.py', 'hw2_ex3_2version_Carla_Andrade.py', 'hw2_ex3_Carla_Andrade.py', 'linear_filtering.png', 'tempCodeRunnerFile.python', '__MACOSX', '__pycache__']
+              
+for file in f:
+            if file.endswith(image_type):
+                FILES.append(file)
+
+
+print(FILES)

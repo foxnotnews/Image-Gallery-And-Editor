@@ -1,15 +1,14 @@
 from PyQt5.QtWidgets import QApplication,QFileDialog,QMainWindow
-import subprocess
+import os
 import xml.etree.ElementTree as xml
 import sys
-from PyQt5.QtWidgets import QApplication,QFileDialog,QMainWindow
 from PyQt5.QtGui import QPixmap
 from GUI_design import*
 from screeninfo import get_monitors
 
 
 FILES=[]
-image_type="(*.png *.jpg *.jpeg *.bmp)"
+image_type=(".png" ,".jpg", ".jpeg", ".bmp")
 
 
 
@@ -18,17 +17,50 @@ class Application(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-        #File load method
         self.load_dialog=QFileDialog()
-        self.load_dialog.setFileMode(QFileDialog.ExistingFiles)
-        self.load_dialog.setNameFilter(f"Image files {image_type}")
-        self.load_image_button.clicked.connect(self.select_files)
+        
+        #select specific files selected
+        self.files_selected=[]
+        
+        self.actionLoad_FIles.triggered.connect(self.select_files)
+        self.actionLoad_Folder.triggered.connect(self.Load_folder)
         self.current_image=0
         self.previous_image_button.clicked.connect(self.previous_image)
-        self.next_image_button.clicked.connect(self.next_image)          
+        self.next_image_button.clicked.connect(self.next_image)
+        self.Save.clicked.connect(self.reset_image_displayed)
+        self.Select_button.clicked.connect(self.selected_image)
+
+    #load folder/but only images
+    def Load_folder(self) :
+        self.directory = str(QtWidgets.QFileDialog.getExistingDirectory())
+        self.files=os.listdir(f"{self.directory}")
+        
+        for file in self.files:
+            if file.endswith(image_type):
+                FILES.append(f"{self.directory}/{file}")
+        print(FILES)
+        self.current_display_image()
+
+
+        
+
+    def selected_image(self):
+        image_path=FILES[self.current_image]
+        self.files_selected.append(image_path)
+        print(self.files_selected)
+    
+
+    def reset_image_displayed(self):
+        FILES=self.files_selected
+        self.current_display_image()
+        print(FILES)
+        
 
     #select 1/ multiple iamge to put in the list FILES
     def select_files(self):
+        #file method
+        self.load_dialog.setFileMode(QFileDialog.ExistingFiles)
+        self.load_dialog.setNameFilter(f"Image files *.png *.jpg *.jpeg *.bmp")
         if self.load_dialog.exec_():
             filenames = self.load_dialog.selectedFiles()
             for file in filenames:
@@ -70,6 +102,10 @@ class Application(QMainWindow, Ui_MainWindow):
         assert width > 0, f"screen width > 0 expected, got: {width}"
         assert height > 0, f"screen width > 0 expected, got: {height}"
         return([width, height])
+    
+    
+      
+      
 
         
 

@@ -78,3 +78,49 @@ class Image():
                 fx1 = signal[x1-1]
                 y_new[i] = fx0 *(1- (x_new[i] - x0) / (x1 - x0)) + fx1 * (x_new[i] - x0) / (x1 - x0)
         return y_new
+    
+
+
+
+    def BilinearUpscaleImage_Carla(self,scale_factor):
+        original_img=self.data
+        img=np.apply_along_axis(self.__interp_1D_Carla, scale_factor=scale_factor, axis=1, arr=original_img)
+        img=np.apply_along_axis(self.__interp_1D_Carla, scale_factor=scale_factor, axis=0, arr=img)
+        return img
+
+    def __interp_1D_Carla(signal,scale_factor):
+        # Computes interpolation at the given abscissas
+        #
+        # Inputs:
+        #   scale factor:
+        #   Signal: Given input ordinates, numpy array
+        
+        #
+        # Outputs:
+        #   y_new: Interpolated values, numpy array
+        x_new=np.linspace(1,len(signal), int(len(signal)*scale_factor),dtype=np.float32)
+        x_vals=np.arange(len(signal))+1
+        signal = signal.astype(np.float32)
+
+        y_new=np.full_like(x_new,0, dtype=np.float32)
+        for i,val in enumerate(x_new):
+            
+            #check if x_new is smaller or equal than the first value in x
+            if val<=x_vals[0]:
+                y_new[i]=signal[0]
+            #check if x_new is bigger  or equal than the last value in x
+            elif val>=x_vals[-1]:
+                y_new[i]=signal[-1]
+            
+            else:
+                #the closer 2 points (x0,x1) are the smallest  difference between val and x_vals. sort and get their inital index 
+                indices=np.argsort(abs(val - x_vals))[:2]
+                x0,x1=x_vals[indices]
+                y0,y1=signal[indices]
+                y_new[i]=y0 + (val - x0) * (y1 - y0) / (x1 - x0)
+
+        return y_new
+
+
+
+

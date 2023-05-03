@@ -40,19 +40,6 @@
      <string>&gt;</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="load_image_button">
-    <property name="geometry">
-     <rect>
-      <x>170</x>
-      <y>550</y>
-      <width>141</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Load images</string>
-    </property>
-   </widget>
    <widget class="QLabel" name="display_image">
     <property name="geometry">
      <rect>
@@ -87,6 +74,58 @@
      <bool>false</bool>
     </property>
    </widget>
+   <widget class="QPushButton" name="Save">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>550</y>
+      <width>131</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Save</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="Select_button">
+    <property name="geometry">
+     <rect>
+      <x>420</x>
+      <y>440</y>
+      <width>131</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Select image</string>
+    </property>
+   </widget>
+   <widget class="QSlider" name="scale">
+    <property name="geometry">
+     <rect>
+      <x>660</x>
+      <y>190</y>
+      <width>22</width>
+      <height>160</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Vertical</enum>
+    </property>
+   </widget>
+   <widget class="QSlider" name="Brightness">
+    <property name="geometry">
+     <rect>
+      <x>790</x>
+      <y>190</y>
+      <width>22</width>
+      <height>160</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Vertical</enum>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -99,16 +138,56 @@
    </property>
    <widget class="QMenu" name="menuside">
     <property name="title">
-     <string>side</string>
+     <string>File</string>
     </property>
     <addaction name="separator"/>
+    <addaction name="actionLoad_FIles"/>
     <addaction name="separator"/>
-    <addaction name="separator"/>
-    <addaction name="separator"/>
+    <addaction name="actionLoad_Folder"/>
+    <addaction name="actionSave"/>
+    <addaction name="actionSave_as"/>
+   </widget>
+   <widget class="QMenu" name="menuFilters">
+    <property name="title">
+     <string>Filters</string>
+    </property>
+    <addaction name="actionEdge_map"/>
+    <addaction name="actionBilinear_Upscaling"/>
    </widget>
    <addaction name="menuside"/>
+   <addaction name="menuFilters"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionLoad_FIles">
+   <property name="text">
+    <string>Load Files</string>
+   </property>
+  </action>
+  <action name="actionLoad_Folder">
+   <property name="text">
+    <string>Load Folder</string>
+   </property>
+  </action>
+  <action name="actionSave">
+   <property name="text">
+    <string>Save</string>
+   </property>
+  </action>
+  <action name="actionSave_as">
+   <property name="text">
+    <string>Save as</string>
+   </property>
+  </action>
+  <action name="actionEdge_map">
+   <property name="text">
+    <string>Edge map</string>
+   </property>
+  </action>
+  <action name="actionBilinear_Upscaling">
+   <property name="text">
+    <string>Bilinear Upscaling</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>
