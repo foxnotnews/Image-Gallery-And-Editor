@@ -25,7 +25,8 @@ class Application(QMainWindow, Ui_MainWindow):
         self.load_image_button.clicked.connect(self.select_files)
         self.current_image=0
         self.previous_image_button.clicked.connect(self.previous_image)
-        self.next_image_button.clicked.connect(self.next_image)          
+        self.next_image_button.clicked.connect(self.next_image)        
+        self.selection = []  
 
     #select 1/ multiple iamge to put in the list FILES
     def select_files(self):
@@ -70,7 +71,26 @@ class Application(QMainWindow, Ui_MainWindow):
         assert width > 0, f"screen width > 0 expected, got: {width}"
         assert height > 0, f"screen width > 0 expected, got: {height}"
         return([width, height])
-
+    def add_to_Selection(self, image):
+        #!!!!!!!!!!!!! TO DO: IS IMAGE A FILE NAME OR THE IMAGE OBJECT? !!!!!!!!!!!!!!!!!!
+        #this method adds an image to the selection list.
+        #
+        #input: image 
+        #
+        #output: none
+        length = len(self.selection)
+        self.selection.append(image)
+        assert len(self.selection) == length +1
+    def remove_from_selection(self, image):
+        #!!!!!!!!!!!!! TO DO: IS IMAGE A FILE NAME OR THE IMAGE OBJECT? !!!!!!!!!!!!!!!!!!
+        #this method removes an image from the selection list.
+        #
+        #input: image 
+        #
+        #output: none
+        length = len(self.selection)
+        self.selection.remove(image)
+        assert len(self.selection) == length -1
         
 
 
