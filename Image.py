@@ -1,15 +1,26 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from PIL import Image
+import os
 
 class Image():
     #img_data: numpy array of the pixel values
     #met_data
     def __init__(self):
         print("to be done")
-    def loadImage(self, path):
+    def load_Image(self, path, filename):
         self.data = np.array(Image.open(path))
+        self.filename = filename
+        self.resolution = [self.data.shape[0], self.data.shape[1]]
+
         #to be added here: reading metadata
+
+        assert isinstance(self.filename, str), f"in Image.load_Image self.filename should be type string, got : {type(self.filename)}"
+
+        assert isinstance(self.resolution, list), f"in Image.load_Image target_resolution should be type list, got : {type(self.resolution)}"
+        assert len(self.resolution) == 2, f"in Image.load_Image target_resolution should have length of 2. got: {len(self.resolution)}"
+        assert isinstance(self.resolution[0], int) & isinstance(self.resolution[1], int), f"in Image.load_Image target_resolution both values should be integers. got: {type(self.resolution[0]), type(self.resolution[1])}"
+        
     def BilinearUpscaleImage(self, scale_factor):
         #Bilinear upscaler. first scales the x direction by the scale_factor, then scales the y direction by the scale_factor. 
         #Inpurts:
@@ -61,6 +72,7 @@ class Image():
     #
     # Outputs:
     #   y_new: Interpolated 1D signal, numpy array
+        cores = self.__get_cpu_cores
         x_vals = np.linspace(1,len(signal),len(signal))
         x_new = np.linspace(1,len(signal), int(len(signal)*scale_factor))
         y_new = np.zeros(len(x_new))
@@ -78,7 +90,30 @@ class Image():
                 fx1 = signal[x1-1]
                 y_new[i] = fx0 *(1- (x_new[i] - x0) / (x1 - x0)) + fx1 * (x_new[i] - x0) / (x1 - x0)
         return y_new
-    
+    def __get_cpu_cores():
+        return(os.cpu_count())
+    def get_scaling_factor(self, target_resolution): 
+        #if the user provides a target resolution instead of a scaling factor, the factor can be calculated
+        #
+        #Input: target_resolution: a list of two integers (width and heigth of the image)
+        #
+        #Output: scale_factor: a float of the realtion between the current resolution and the target resolution.
+        assert isinstance(target_resolution, list), f"in Image.get_scaling_factor target_resolution should be type list, got : {type(target_resolution)}"
+        assert len(target_resolution) == 2, f"in Image.get_scaling_factor target_resolution should have length of 2. got: {len(target_resolution)}"
+        assert isinstance(target_resolution[0], int) & isinstance(target_resolution[1], int), f"in Image.get_scaling_factor target_resolution both values should be integers. got: {type(target_resolution[0]), type(target_resolution[1])}"
+        
+        assert isinstance(self.resolution, list), f"in Image.get_scaling_factor target_resolution should be type list, got : {type(self.resolution)}"
+        assert len(self.resolution) == 2, f"in Image.get_scaling_factor target_resolution should have length of 2. got: {len(self.resolution)}"
+        assert isinstance(self.resolution[0], int) & isinstance(self.resolution[1], int), f"in Image.get_scaling_factor target_resolution both values should be integers. got: {type(self.resolution[0]), type(self.resolution[1])}"
+        
+        scale_factor = target_resolution/self.resolution
+        
+        assert isinstance(scale_factor, float), f"in Image.get_scaling_factor scale_factor shouldbe a float. got: {type(scale_factor)}"
+
+        return scale_factor
+    #def interpol():
+            
+
 
 
 
