@@ -30,7 +30,7 @@ class Application(QMainWindow, Ui_MainWindow):
         self.Save.clicked.connect(self.reset_image_displayed)
         self.Select_button.clicked.connect(self.selected_image)
 
-    #load folder/but only images
+    #load all images insid a folder
     def Load_folder(self) :
         self.directory = str(QtWidgets.QFileDialog.getExistingDirectory())
         self.files=os.listdir(f"{self.directory}")
@@ -49,6 +49,10 @@ class Application(QMainWindow, Ui_MainWindow):
         self.files_selected.append(image_path)
         print(self.files_selected)
     
+    def remove_image_from_selection(self):
+        image_path=FILES[self.current_image]
+        self.files_selected.remove(image_path)
+        print(self.files_selected)
 
     def reset_image_displayed(self):
         FILES=self.files_selected
@@ -99,6 +103,8 @@ class Application(QMainWindow, Ui_MainWindow):
             if(monitor.is_primary):
                 width = monitor.width
                 height = monitor.height
+        assert isinstance(width, int), f"in main.__get_screen_resolution width should be an int. got: {type(width)}"
+        assert isinstance(height, int), f"in main.__get_screen_resolution height should be an int. got: {type(height)}"
         assert width > 0, f"screen width > 0 expected, got: {width}"
         assert height > 0, f"screen width > 0 expected, got: {height}"
         return([width, height])
